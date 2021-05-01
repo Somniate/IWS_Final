@@ -20,26 +20,7 @@ if ($result) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <!-- style css here -->
     <style>
-        .link0 {
-            display: inline;
-        }
 
-        .link-button {
-            background: none;
-            border: none;
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        .link-button:focus {
-            outline: none;
-        }
-
-        .link-button:active {
-            color: red;
-        }
     </style>
 </head>
 
@@ -58,6 +39,7 @@ if ($result) {
     <section class="bodywork">
 
         <div class="container">
+            <!-- search function not completed yet -->
             <form action="" method="get">
                 <label for="search_el">Search by:</label>
                 <select name="search_el" id="search_el">
