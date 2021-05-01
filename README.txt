@@ -1,0 +1,1 @@
+If you have a another database you want to use, place your sql file and change database name in config.php
