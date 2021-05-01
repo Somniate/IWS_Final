@@ -51,6 +51,7 @@ if ($result) {
             </form>
 
             <div>
+                <!-- news display -->
                 <?php if (count($rows) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
