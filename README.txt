@@ -7,3 +7,5 @@ run on xampp with local host.
 the homepage is the index.php file
 
 app is still in progress
+
+latest varsion: patch-2
