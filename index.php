@@ -37,15 +37,10 @@ if ($result) {
     <section class="bodywork">
 
         <div class="container">
-            <!-- search function not completed yet -->
-            <form action="" method="get">
-                <label for="search_el">Search by:</label>
-                <select name="search_el" id="search_el">
-                    <option value="name">Name</option>
-                    <option value="cat">Category</option>
-                </select>
-                <input type="text" name="search_field" id="search_field" placeholder="Enter search key">
-                <button type="submit">Search</button>
+            <!-- search function -->
+            <form action="search.php" method="get">
+                <input type="text" name="search_field" id="search_field" placeholder="Enter search key" required>
+                <button type="submit" class="btn btn-primary"required>Search</button>
             </form>
 
             <div>
