@@ -40,27 +40,71 @@ $article = $result->fetch_assoc();
     <!-- comment section -->
     <section class="comments">
         <div class="container">
-            <h3>Comments</h3>
-            <?php 
-            $id_a = $article['id_article'];
-            $sql_comment = "SELECT * FROM comments WHERE id_article = $id_a";
-            $result_comment = $mysqli->query($sql_comment);
-            $comments = [];
-            if ($result_comment) {
-                $comments = $result_comment->fetch_all(MYSQLI_ASSOC);
-            }
-            ?>
-            <?php if (count($comments) == 0) : ?>
+        
+            <!-- comment creator -->
+            <div class="creator">
+                <form action="" method="post">
+                    <h3>Write a comment</h3>
+                    <label for="writer">Enter your name (Optional)</label>
+                    <input type="text" name="writer" id="writer" placeholder="anon"><br>
+                    <textarea name="write_comment" id="write_comment" cols="100" rows="6" placeholder="Write your comment here" required></textarea><br>
+                    <button type="submit" class="btn btn-primary" name="save">Submit</button>
+                </form>
+                <?php
+                if (isset($_POST['save'])) {
+                    error_reporting(0);
+                    $writer = $_POST['writer'];
+                    $c0 = $_POST['write_comment'];
+                    if (strlen($writer) == 0) {
+                        $writer = 'anon';
+                    }
+                    if (strlen($c0) != 0) {
+                        $sql_c0 = "INSERT INTO comments(id_article, author_comment, content_comment) VALUES ('$id', '$writer', '$c0')";
+                        $result_c0 = $mysqli->query($sql_c0); //true / false
+
+                        if ($result_c0) {
+                            //refresh page if success
+                            //echo "alert(Success!)";
+                            header("Refresh:0");
+                        } else {
+                            //return to index.php if fail
+                            //echo "alert(Failed!)";
+                            header("location: index.php");
+                        }
+                    } else {
+                        //return to index.php if there is no comment where pressing submit button
+                        header("location: index.php");
+                    }
+                }
+
+
+                ?>
+            </div>
+            <!-- comments viewer -->
+            <div class="viewer">
+                <h3>Comments</h3>
+                <?php
+
+                $sql_c1 = "SELECT * FROM comments WHERE id_article = $id";
+                $result_c1 = $mysqli->query($sql_c1);
+                $comments = [];
+                if ($result_c1) {
+                    $comments = $result_c1->fetch_all(MYSQLI_ASSOC);
+                }
+                ?>
+                <?php if (count($comments) == 0) : ?>
                     <p>No comments</p>
                 <?php else : ?>
                     <?php foreach ($comments as $row) : ?>
                         <div>
-                            <h2><?php echo $row['author_comment'] ?></a></h2>
+                            <h4><?php echo $row['author_comment'] ?></a></h4>
                             <p><?php echo $row['date_created'] ?></p>
                             <p><?php echo $row['content_comment'] ?></p>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+            </div>
+
         </div>
     </section>
 
