@@ -93,7 +93,7 @@ if ($result) {
                     <p>No news</p>
                 <?php else : ?>
                     <?php foreach ($rows as $row) : ?>
-                        <div>
+                        <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
                             <a href="category_search.php?category=<?php echo $row['name_category'] ?>"><?php echo $row['name_category'] ?></a>
                             <p><?php echo $row['date_article'] ?></p>
