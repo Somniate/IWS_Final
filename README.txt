@@ -2,6 +2,6 @@ Code uses W3.CSS
 
 Database: MySQL
 
-run on xampp with local host.
+Run on xampp.
 
-the homepage is the index.php file
+The homepage is the index.php file
