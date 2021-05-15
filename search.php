@@ -48,11 +48,12 @@ if ($result) {
             <div class="topnav">
                 <div class="w3-container w3-center w3-padding-16">
                     <a href="index.php">Home</a>
-                    <a href="local.php">Local</a>
-                    <a href="sports.php">Sport</a>
-                    <a href="medical.php">Medical</a>
+                    <a href="category_search.php?category=Business">Business</a>
+                    <a href="category_search.php?category=Entertainment">Entertainment</a>
+                    <a href="category_search.php?category=Politics">Politics</a>
+                    <a href="category_search.php?category=Science">Science</a>
+                    <a href="category_search.php?category=World">World</a>
                     <a href="#about">About Us</a>
-                </div>
             </div>
         </section>
 

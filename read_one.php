@@ -50,13 +50,12 @@ $article = $result->fetch_assoc();
         <div class="topnav">
             <div class="w3-container w3-center w3-padding-16">
                 <a href="index.php">Home</a>
-                <a href="local.php">Business</a>
-                <a href="sports.php">Entertainment</a>
-                <a href="category_search.php?category=politics">Politics</a>
-                <a href="medical.php">Science</a>
-                <a href="medical.php">World</a>
+                <a href="category_search.php?category=Business">Business</a>
+                <a href="category_search.php?category=Entertainment">Entertainment</a>
+                <a href="category_search.php?category=Politics">Politics</a>
+                <a href="category_search.php?category=Science">Science</a>
+                <a href="category_search.php?category=World">World</a>
                 <a href="#about">About Us</a>
-            </div>
         </div>
     </section>
 
@@ -118,7 +117,7 @@ $article = $result->fetch_assoc();
                         <label for="writer">Enter your name (Optional)</label>
                         <input type="text" name="writer" id="writer" placeholder="anon"><br>
                         <textarea name="write_comment" id="write_comment" cols="100" rows="6" placeholder="Write your comment here" required></textarea><br>
-                        <button type="submit" class="w3-button w3-black w3-round-large w3-medium" name="save">Submit</button>
+                        <button type="submit" class="btn btn-dark" name="save">Submit</button>
                     </form>
                     <?php
                     if (isset($_POST['save'])) {
