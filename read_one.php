@@ -74,7 +74,7 @@ $article = $result->fetch_assoc();
             <!-- title -->
             <h1><?php echo $article['title_article'] ?></h1>
             <!-- category -->
-            <a href="category_search.php?category=<?php echo $row['name_category'] ?>"><?php echo $row['name_category'] ?></a>
+            <a href="category_search.php?category=<?php echo $article['name_category'] ?>"><?php echo $article['name_category'] ?></a>
             <!-- date created -->
             <p><?php echo $article['date_article'] ?></p>
             <!-- author -->
