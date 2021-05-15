@@ -1,8 +1,21 @@
 <?php
 include_once('./config.php');
+
+//limit per page
+$limit = 5;
+
+// determine which page number visitor is currently on
+if (!isset($_GET['page'])) {
+    $page = 1;
+} else {
+    $page = $_GET['page'];
+}
+
+// determine number of total pages available
+$this_page_first_result = ($page - 1) * $limit;
 $category_name = $_GET['category'];
 
-$sql0 = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category WHERE name_category = '$category_name' ORDER BY articles.date_article";
+$sql0 = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category WHERE name_category = '$category_name' ORDER BY articles.date_article DESC LIMIT $this_page_first_result, $limit";
 $result0 = $mysqli->query($sql0);
 $rows = [];
 if ($result0) {
@@ -34,6 +47,15 @@ if ($result0) {
 
         a {
             text-decoration: none;
+        }
+        .categorywhat{
+            font-size: 40px;
+            font-weight: 500;
+            text-transform: uppercase;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            letter-spacing: 3px;
         }
     </style>
 </head>
@@ -74,6 +96,17 @@ if ($result0) {
 
             <!-- news display -->
             <div>
+
+                <div class="w3-container">
+
+                    <div class="categorywhat">
+                        <?php foreach ($rows as $row) : ?>
+                            <p><?php echo $row['name_category'] ?></p>
+                         <?php endforeach; ?>
+                    </div>
+
+                 </div>
+
                 <?php if (count($rows) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
@@ -90,6 +123,25 @@ if ($result0) {
                 <?php endif; ?>
             </div>
         </div>
+
+            <!-- pagination -->
+        <div class="w3-center">
+            <?php
+            //query
+            $sql_page = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC";
+            $result_page = $mysqli->query($sql_page);
+
+            $number_of_result = mysqli_num_rows($result_page);
+            $number_of_pages = ceil($number_of_result / $limit);
+
+            //link to pages
+            for ($page = 1; $page <= $number_of_pages; $page++) {
+                echo '<b><a class="w3-button w3-hover-black" href="index.php?page=' . $page . '">' . $page . '</a></b> ';
+            }
+            ?>
+
+        </div>
+
         <!-- back to top button -->
         <div class="back-to-top w3-center">
             <b><a href="#top">Back to top</a></b>

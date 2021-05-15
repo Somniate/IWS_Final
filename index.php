@@ -87,6 +87,7 @@ if ($result) {
                 </form>
             </div>
 
+
             <!-- news display -->
             <div>
                 <?php if (count($rows) == 0) : ?>
