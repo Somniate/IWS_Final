@@ -1,25 +1,12 @@
 <?php
 include_once('./config.php');
+$category_name = $_GET['category'];
 
-//limit per page
-$limit = 5;
-
-// determine which page number visitor is currently on
-if (!isset($_GET['page'])) {
-    $page = 1;
-} else {
-    $page = $_GET['page'];
-}
-
-// determine number of total pages available
-$this_page_first_result = ($page - 1) * $limit;
-
-//add limit
-$sql = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC LIMIT $this_page_first_result, $limit";
-$result = $mysqli->query($sql); //trả về object || false
+$sql0 = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category WHERE name_category = '$category_name' ORDER BY articles.date_article";
+$result0 = $mysqli->query($sql0);
 $rows = [];
-if ($result) {
-    $rows = $result->fetch_all(MYSQLI_ASSOC);
+if ($result0) {
+    $rows = $result0->fetch_all(MYSQLI_ASSOC);
 }
 ?>
 
@@ -30,9 +17,7 @@ if ($result) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" /> -->
-    <!-- <link rel="stylesheet" href="beta.css"> -->
+    <title>Category: <?php echo $category_name ?></title>
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -51,9 +36,9 @@ if ($result) {
             text-decoration: none;
         }
     </style>
+</head>
 
 <body class="w3-light-grey">
-
     <!-- header here -->
     <header class="w3-container w3-center w3-padding-32" id="top">
         <h1><a href="index.php"><b>DAILY NEWS</b></a></h1>
@@ -105,25 +90,6 @@ if ($result) {
                 <?php endif; ?>
             </div>
         </div>
-
-        <!-- pagination -->
-        <div class="w3-center">
-            <?php
-            //query
-            $sql_page = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC";
-            $result_page = $mysqli->query($sql_page);
-
-            $number_of_result = mysqli_num_rows($result_page);
-            $number_of_pages = ceil($number_of_result / $limit);
-
-            //link to pages
-            for ($page = 1; $page <= $number_of_pages; $page++) {
-                echo '<b><a class="w3-button w3-hover-black" href="index.php?page=' . $page . '">' . $page . '</a></b> ';
-            }
-            ?>
-
-        </div>
-
         <!-- back to top button -->
         <div class="back-to-top w3-center">
             <b><a href="#top">Back to top</a></b>
@@ -141,10 +107,6 @@ if ($result) {
             <h5>Programming language: PHP</h5>
         </div>
     </footer>
-
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script> -->
-
 </body>
 
 </html>
