@@ -118,7 +118,7 @@ $article = $result->fetch_assoc();
                         <label for="writer">Enter your name (Optional)</label>
                         <input type="text" name="writer" id="writer" placeholder="anon"><br>
                         <textarea name="write_comment" id="write_comment" cols="100" rows="6" placeholder="Write your comment here" required></textarea><br>
-                        <button type="submit" class="btn btn-dark" name="save">Submit</button>
+                        <button type="submit" class="w3-button w3-black w3-round-large w3-medium" name="save">Submit</button>
                     </form>
                     <?php
                     if (isset($_POST['save'])) {
