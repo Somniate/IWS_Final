@@ -47,7 +47,7 @@ if ($result1) {
 </head>
 
 <body class="w3-light-grey">
-    
+
     <!-- header here -->
     <header class="w3-container w3-center w3-padding-32" id="top">
         <h1><a href="index.php"><b>DAILY NEWS</b></a></h1>
@@ -59,11 +59,11 @@ if ($result1) {
         <div class="topnav">
             <div class="w3-container w3-center w3-padding-16">
                 <a href="index.php">Home</a>
-                <a href="local.php">Business</a>
-                <a href="sports.php">Entertainment</a>
-                <a href="category_search.php?category=politics">Politics</a>
-                <a href="medical.php">Science</a>
-                <a href="medical.php">World</a>
+                <a href="category_search.php?category=Business">Business</a>
+                <a href="category_search.php?category=Entertainment">Entertainment</a>
+                <a href="category_search.php?category=Politics">Politics</a>
+                <a href="category_search.php?category=Science">Science</a>
+                <a href="category_search.php?category=World">World</a>
                 <a href="#about">About Us</a>
             </div>
         </div>
@@ -84,11 +84,11 @@ if ($result1) {
 
             <!-- search result -->
             <div>
-            <?php if (count($articles) == 0) : ?>
+                <?php if (count($articles) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
                     <?php foreach ($articles as $row) : ?>
-                        <div>
+                        <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
                             <!-- <p><?php echo $row['name_category'] ?></p> -->
                             <p><?php echo $row['date_article'] ?></p>
