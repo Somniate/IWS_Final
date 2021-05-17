@@ -1,4 +1,5 @@
 <?php
+//embed php code from config.php
 include_once('./config.php');
 
 //limit per page
@@ -14,11 +15,18 @@ if (!isset($_GET['page'])) {
 // determine number of total pages available
 $this_page_first_result = ($page - 1) * $limit;
 
-//add limit
+//query for getting articles and addiing limit articles per page
 $sql = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC LIMIT $this_page_first_result, $limit";
-$result = $mysqli->query($sql); //trả về object || false
+
+//return object or false
+$result = $mysqli->query($sql);
+
+//empty array for multiple articles
 $rows = [];
+
+//if there's something returned
 if ($result) {
+    //return all rows to the array with columns' name as index
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
 ?>
@@ -60,16 +68,28 @@ if ($result) {
         <p>IWS Final Project of <span class="w3-tag">Trang and Thanh</span></p>
     </header>
 
-    <!-- banner here(optional, but should have) -->
+    <!-- nav bar -->
     <section class="banner">
         <div class="topnav">
             <div class="w3-container w3-center w3-padding-16">
+                <!-- Request: GET index.php HTTP/1.1 -->
                 <a href="index.php">Home</a>
+
+                <!-- Request: GET category_search.php?category=Business HTTP/1.1 -->
                 <a href="category_search.php?category=Business">Business</a>
+
+                <!-- Request: GET category_search.php?category=Entertainment HTTP/1.1 -->
                 <a href="category_search.php?category=Entertainment">Entertainment</a>
+
+                <!-- Request: GET category_search.php?category=Politics HTTP/1.1 -->
                 <a href="category_search.php?category=Politics">Politics</a>
+
+                <!-- Request: GET category_search.php?category=Science HTTP/1.1 -->
                 <a href="category_search.php?category=Science">Science</a>
+
+                <!-- Request: GET category_search.php?category=World HTTP/1.1 -->
                 <a href="category_search.php?category=World">World</a>
+
                 <a href="#about">About Us</a>
             </div>
         </div>
@@ -82,10 +102,80 @@ if ($result) {
             <!-- search function -->
             <div class="w3-container w3-center w3-padding-32">
                 <form action="search.php" method="get">
+                    <!-- Request: GET search.php?search_field=# HTTP/1.1 -->
                     <input type="text" name="search_field" id="search_field" placeholder="Enter search key" required>
                     <button type="submit" class="w3-button w3-black w3-round-large w3-medium" required>Search</button>
                 </form>
             </div>
+
+            <!--latest news display -->
+
+            <?php
+            $sql_latest = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC LIMIT 3";
+            $result_latest = $mysqli->query($sql_latest);
+            $rows_latest = [];
+            if ($result_latest) {
+                //return all rows to the array with columns' name as index
+                $rows_latest = $result_latest->fetch_all(MYSQLI_ASSOC);
+            }
+            ?>
+
+            <div class = "w3-content w3-display-container"> 
+
+            <?php foreach ($rows_latest as $row_latest) : ?>          
+
+                <div class = "mySlides">
+
+                    <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="Lights" style="width:100%">
+
+                <div class = "w3-container w3-white">
+                    <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
+                    <h2><a href="read_one.php?id=<?php echo $row_latest['id_article']; ?>"><?php echo $row_latest['title_article'] ?></a></h2>
+
+                    <!-- Request: GET category_search.php?category=# HTTP/1.1 -->
+                    <a href="category_search.php?category=<?php echo $row_latest['name_category'] ?>"><?php echo $row_latest['name_category'] ?></a>
+
+                    <!-- article's date -->
+                    <p><?php echo $row_latest['date_article'] ?></p>
+
+                    <!-- article's author -->
+                    <p>created by <?php echo $row_latest['author_article'] ?></p>
+
+                    <!-- article's intro -->
+                    <p><?php echo $row_latest['intro_article'] ?></p>
+
+                </div>
+
+                </div>
+            
+
+            <?php endforeach; ?>
+
+
+            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+
+            </div>
+
+            <script>
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = x.length}
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";  
+                }
+                x[slideIndex-1].style.display = "block";  
+            }
+            </script>
 
 
             <!-- news display -->
@@ -93,12 +183,23 @@ if ($result) {
                 <?php if (count($rows) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
+                    <!-- each row in $rows is consider $row -->
                     <?php foreach ($rows as $row) : ?>
                         <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
+                            <!-- link to article -->
+                            <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
+
+                            <!-- Request: GET category_search.php?category=# HTTP/1.1 -->
                             <a href="category_search.php?category=<?php echo $row['name_category'] ?>"><?php echo $row['name_category'] ?></a>
+
+                            <!-- article's date -->
                             <p><?php echo $row['date_article'] ?></p>
+
+                            <!-- article's author -->
                             <p>created by <?php echo $row['author_article'] ?></p>
+
+                            <!-- article's intro -->
                             <p><?php echo $row['intro_article'] ?></p>
                         </div>
 
@@ -110,7 +211,7 @@ if ($result) {
         <!-- pagination -->
         <div class="w3-center">
             <?php
-            //query
+            //query for pagination
             $sql_page = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC";
             $result_page = $mysqli->query($sql_page);
 

@@ -1,8 +1,15 @@
 <?php
+//embed php code from config.php
 include_once('./config.php');
+
+//get search value from any pages when the search button is clicked
 $val = $_GET['search_field'];
+
+//query for searching
 $sql = "SELECT * FROM articles WHERE title_article LIKE '%$val%'";
 $result = $mysqli->query($sql);
+
+//empty array for result
 $rows = [];
 if ($result) {
     $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -43,28 +50,42 @@ if ($result) {
             <p>IWS Final Project of <span class="w3-tag">Trang and Thanh</span></p>
         </header>
 
-        <!-- banner here(optional, but should have) -->
+        <!-- nav bar -->
         <section class="banner">
             <div class="topnav">
                 <div class="w3-container w3-center w3-padding-16">
+                    <!-- Request: GET index.php HTTP/1.1 -->
                     <a href="index.php">Home</a>
+
+                    <!-- Request: GET category_search.php?category=Business HTTP/1.1 -->
                     <a href="category_search.php?category=Business">Business</a>
+
+                    <!-- Request: GET category_search.php?category=Entertainment HTTP/1.1 -->
                     <a href="category_search.php?category=Entertainment">Entertainment</a>
+
+                    <!-- Request: GET category_search.php?category=Politics HTTP/1.1 -->
                     <a href="category_search.php?category=Politics">Politics</a>
+
+                    <!-- Request: GET category_search.php?category=Science HTTP/1.1 -->
                     <a href="category_search.php?category=Science">Science</a>
+
+                    <!-- Request: GET category_search.php?category=World HTTP/1.1 -->
                     <a href="category_search.php?category=World">World</a>
+
                     <a href="#about">About Us</a>
+                </div>
             </div>
         </section>
 
-        <section class="bodywork">
+        <section class="main">
             <div class="w3-content">
 
                 <!-- search function -->
                 <div class="w3-container w3-center w3-padding-32">
                     <form action="search.php" method="get">
+                        <!-- Request: GET search.php?search_field=# HTTP/1.1 -->
                         <input type="text" name="search_field" id="search_field" placeholder="Enter search key" required>
-                        <button type="submit" class="btn btn-dark" required>Search</button>
+                        <button type="submit" class="w3-button w3-black w3-round-large w3-medium" required>Search</button>
                     </form>
                 </div>
 
@@ -74,14 +95,19 @@ if ($result) {
                     <p>Nothing found</p>
                 <?php else : ?>
                     <?php foreach ($rows as $row) : ?>
-                        <!-- we don't need row anymore since we're just gonna use a "return to top" button
-                                or you can create pagination like in index.
-                                your choice -->
                         <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
+                            <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
+
                             <!-- <p><?php echo $row['name_category'] ?></p> -->
+
+                            <!-- article's date -->
                             <p><?php echo $row['date_article'] ?></p>
+
+                            <!-- article's author -->
                             <p>created by <?php echo $row['author_article'] ?></p>
+
+                            <!-- article's intro -->
                             <p><?php echo $row['intro_article'] ?></p>
                         </div>
 

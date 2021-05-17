@@ -15,8 +15,11 @@ if (!isset($_GET['page'])) {
 $this_page_first_result = ($page - 1) * $limit;
 $category_name = $_GET['category'];
 
+//query for showing articles based on chosen category
 $sql0 = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category WHERE name_category = '$category_name' ORDER BY articles.date_article DESC LIMIT $this_page_first_result, $limit";
 $result0 = $mysqli->query($sql0);
+
+//empty array
 $rows = [];
 if ($result0) {
     $rows = $result0->fetch_all(MYSQLI_ASSOC);
@@ -48,7 +51,8 @@ if ($result0) {
         a {
             text-decoration: none;
         }
-        .categorywhat{
+
+        .categorywhat {
             font-size: 40px;
             font-weight: 500;
             text-transform: uppercase;
@@ -67,16 +71,28 @@ if ($result0) {
         <p>IWS Final Project of <span class="w3-tag">Trang and Thanh</span></p>
     </header>
 
-    <!-- banner here(optional, but should have) -->
+    <!-- nav bar -->
     <section class="banner">
         <div class="topnav">
             <div class="w3-container w3-center w3-padding-16">
+                <!-- Request: GET index.php HTTP/1.1 -->
                 <a href="index.php">Home</a>
+
+                <!-- Request: GET category_search.php?category=Business HTTP/1.1 -->
                 <a href="category_search.php?category=Business">Business</a>
+
+                <!-- Request: GET category_search.php?category=Entertainment HTTP/1.1 -->
                 <a href="category_search.php?category=Entertainment">Entertainment</a>
+
+                <!-- Request: GET category_search.php?category=Politics HTTP/1.1 -->
                 <a href="category_search.php?category=Politics">Politics</a>
+
+                <!-- Request: GET category_search.php?category=Science HTTP/1.1 -->
                 <a href="category_search.php?category=Science">Science</a>
+
+                <!-- Request: GET category_search.php?category=World HTTP/1.1 -->
                 <a href="category_search.php?category=World">World</a>
+
                 <a href="#about">About Us</a>
             </div>
         </div>
@@ -98,24 +114,31 @@ if ($result0) {
             <div>
 
                 <div class="w3-container">
-
                     <div class="categorywhat">
-                        <?php foreach ($rows as $row) : ?>
-                            <p><?php echo $row['name_category'] ?></p>
-                         <?php endforeach; ?>
+                            <p><?php echo $category_name ?></p>
                     </div>
-
-                 </div>
+                </div>
 
                 <?php if (count($rows) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
+                    <!-- each row in $rows is consider $row -->
                     <?php foreach ($rows as $row) : ?>
                         <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
+                            <!-- link to article -->
+                            <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
+
+                            <!-- Request: GET category_search.php?category=# HTTP/1.1 -->
                             <a href="category_search.php?category=<?php echo $row['name_category'] ?>"><?php echo $row['name_category'] ?></a>
+
+                            <!-- article's date -->
                             <p><?php echo $row['date_article'] ?></p>
+
+                            <!-- article's author -->
                             <p>created by <?php echo $row['author_article'] ?></p>
+
+                            <!-- article's intro -->
                             <p><?php echo $row['intro_article'] ?></p>
                         </div>
 
@@ -124,7 +147,7 @@ if ($result0) {
             </div>
         </div>
 
-            <!-- pagination -->
+        <!-- pagination -->
         <div class="w3-center">
             <?php
             //query
