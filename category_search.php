@@ -124,7 +124,7 @@ if ($result0) {
                 <?php else : ?>
                     <!-- each row in $rows is consider $row -->
                     <?php foreach ($rows as $row) : ?>
-                        <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
+                        <div class="w3-card w3-margin w3-container w3-white w3-row">
                             <!-- link to article -->
                             <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>

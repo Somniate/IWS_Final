@@ -1,4 +1,6 @@
 <?php
+//NOTE: Some design changed
+
 //embed php code from config.php
 include_once('./config.php');
 
@@ -58,6 +60,10 @@ if ($result) {
         a {
             text-decoration: none;
         }
+        .latest{
+            font-size: 150%;
+        }
+
     </style>
 
 <body class="w3-light-grey">
@@ -104,13 +110,15 @@ if ($result) {
                 <form action="search.php" method="get">
                     <!-- Request: GET search.php?search_field=# HTTP/1.1 -->
                     <input type="text" name="search_field" id="search_field" placeholder="Enter search key" required>
-                    <button type="submit" class="w3-button w3-black w3-round-large w3-medium" required>Search</button>
+                    <button type="submit" class="w3-button w3-black w3-medium" required>Search</button>
                 </form>
             </div>
 
             <!--latest news display -->
 
             <?php
+
+            //query getting 3 latest article
             $sql_latest = "SELECT * FROM articles LEFT JOIN categories ON articles.category_article = categories.id_category ORDER BY articles.date_article DESC LIMIT 3";
             $result_latest = $mysqli->query($sql_latest);
             $rows_latest = [];
@@ -120,13 +128,16 @@ if ($result) {
             }
             ?>
 
-            <div class = "w3-content w3-display-container"> 
+            <div class = "w3-content w3-display-container w3-card-2"> 
 
             <?php foreach ($rows_latest as $row_latest) : ?>          
 
                 <div class = "mySlides">
 
-                    <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="Lights" style="width:100%">
+                <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="Lights" style="width:100%">
+                <div class="w3-display-topmiddle w3-container w3-white w3-margin-top w3-wide">
+                <a class = "latest">LATEST NEWS</a>
+                </div>
 
                 <div class = "w3-container w3-white">
                     <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
@@ -151,11 +162,14 @@ if ($result) {
 
             <?php endforeach; ?>
 
+            <!-- slideshow button -->
 
             <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
             <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
 
             </div>
+
+            <!-- slideshow script -->
 
             <script>
             var slideIndex = 1;
@@ -185,7 +199,7 @@ if ($result) {
                 <?php else : ?>
                     <!-- each row in $rows is consider $row -->
                     <?php foreach ($rows as $row) : ?>
-                        <div class="w3-panel w3-border w3-border-w3-camo-verydarkgrey w3-round-xxlarge">
+                        <div class="w3-card w3-margin w3-container w3-white w3-row">
                             <!-- link to article -->
                             <!-- Request: GET read_one.php?id=# HTTP/1.1 -->
                             <h2><a href="read_one.php?id=<?php echo $row['id_article']; ?>"><?php echo $row['title_article'] ?></a></h2>
@@ -201,6 +215,13 @@ if ($result) {
 
                             <!-- article's intro -->
                             <p><?php echo $row['intro_article'] ?></p>
+
+                        <!--read more-->
+
+                        <div>
+                        <a href= "read_one.php?id=<?php echo $row['id_article']; ?>" class = "w3-button w3-margin-bottom w3-white w3-border">Read More</a>
+                        </div>
+
                         </div>
 
                     <?php endforeach; ?>

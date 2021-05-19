@@ -1,4 +1,6 @@
 <?php
+//NOTE: add nl2br() to insert line break - 19/5
+
 //embed php code from config.php
 include_once('./config.php');
 
@@ -39,6 +41,12 @@ $article = $result->fetch_assoc();
 
         a {
             text-decoration: none;
+        }
+        .intro{
+            font-size: 120%;
+        }
+        .cmtbox{
+            background-color : #333;
         }
     </style>
 </head>
@@ -91,7 +99,7 @@ $article = $result->fetch_assoc();
         </div>
 
         <!-- news display -->
-        <div class="w3-panel w3-border w3-padding-16 w3-margin">
+        <div class="w3-card w3-white w3-padding-16 w3-margin w3-container">
             <!-- title -->
             <h1><?php echo $article['title_article'] ?></h1>
 
@@ -103,13 +111,13 @@ $article = $result->fetch_assoc();
             <p><?php echo $article['date_article'] ?></p>
 
             <!-- author -->
-            <p>created by <?php echo $article['author_article'] ?></p>
+            <p>created by <span class="w3-tag"><?php echo $article['author_article'] ?></span></p>
 
             <!-- intro -->
-            <p style="font-weight: bold;"><?php echo $article['intro_article'] ?></p>
+            <p class= "intro" style="font-weight: bold;"><?php echo $article['intro_article'] ?></p>
 
             <!-- content -->
-            <p><?php echo $article['content_article'] ?></p>
+            <p><?php echo nl2br($article['content_article']) ?></p>
 
             <!-- tags -->
             <div class="tags">
@@ -138,7 +146,9 @@ $article = $result->fetch_assoc();
                     foreach ($tags as $row3) {
                     ?>
                         <!-- Request: GET tag_search.php?tag=# HTTP/1.1 -->
+                        <span class="w3-tag">
                         <a href="tag_search.php?tag=<?php echo $row3['name_tag'] ?>"><?php echo $row3['name_tag'] ?></a><br>
+                        </span>
                 <?php
                     }
                 }
@@ -155,8 +165,10 @@ $article = $result->fetch_assoc();
                     <form action="" method="post">
                         <!-- Request: POST read_one.php HTTP/1.1 (not sure about this one)-->
                         <h3>Write a comment</h3>
-                        <label for="writer">Enter your name (Optional)</label>
+                        <div class = "w3-margin">
+                        <label style ="font-weight:bold" for="writer">Enter your name (Optional)</label>
                         <input type="text" name="writer" id="writer" placeholder="anon"><br>
+                        </div>
                         <textarea name="write_comment" id="write_comment" cols="100" rows="6" placeholder="Write your comment here" required></textarea><br>
                         <button type="submit" class="w3-button w3-black w3-round-large w3-medium" name="save">Submit</button>
                     </form>
@@ -218,7 +230,8 @@ $article = $result->fetch_assoc();
                     <?php else : ?>
                         <!-- each row in $comments is consider $row -->
                         <?php foreach ($comments as $row) : ?>
-                            <div style="border:3px solid white" class="w3-panel w3-border-gray w3-round-xxlarge">
+                        <div class = "cmtbox">
+                            <div class="w3-container w3-text-white w3-margin">
                                 <!-- showing comment's maker -->
                                 <h4><?php echo $row['author_comment'] ?></a></h4>
 
@@ -226,8 +239,9 @@ $article = $result->fetch_assoc();
                                 <p><?php echo $row['date_created'] ?></p>
 
                                 <!-- showing comment's content -->
-                                <p><?php echo $row['content_comment'] ?></p>
+                                <p><?php echo $row['content_comment'] ?></p><br>
                             </div>
+                        </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
