@@ -232,6 +232,8 @@ $article = $result->fetch_assoc();
                         <?php foreach ($comments as $row) : ?>
                         <div class = "cmtbox">
                             <div class="w3-container w3-text-white w3-margin">
+                            <img src = "https://iicllhawaii.iafor.org/wp-content/uploads/sites/31/2017/02/IAFOR-Blank-Avatar-Image-1.jpg" alt="Image" class="w3-left w3-margin" style="width:100px">
+                            
                                 <!-- showing comment's maker -->
                                 <h4><?php echo $row['author_comment'] ?></a></h4>
 
