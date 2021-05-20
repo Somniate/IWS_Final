@@ -197,6 +197,9 @@ if ($result) {
                 <?php if (count($rows) == 0) : ?>
                     <p>No news</p>
                 <?php else : ?>
+                <?php
+                $img = array(); 
+                ?>
                     <!-- each row in $rows is consider $row -->
                     <?php foreach ($rows as $row) : ?>
                         <div class="w3-card w3-margin w3-container w3-white w3-row">
@@ -211,7 +214,7 @@ if ($result) {
                             <p><?php echo $row['date_article'] ?></p>
 
                             <!-- article's author -->
-                            <p>created by <?php echo $row['author_article'] ?></p>
+                            <p>created by <span class = "w3-tag"><?php echo $row['author_article'] ?></span></p>
 
                             <!-- article's intro -->
                             <p><?php echo $row['intro_article'] ?></p>
